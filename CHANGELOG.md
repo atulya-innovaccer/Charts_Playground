@@ -1,0 +1,24 @@
+# Changelog
+
+All notable updates to this workspace should be recorded here.
+
+## 2026-04-14
+
+### Test2 V3: Hover interactions and Storybook control cleanup
+
+- Added shared hover-card support for `V3` charts in `Test2`
+- Expanded hover interaction coverage across line, bar, combo, donut, histogram, gauge, pointer scale, map bubble, and sparkline charts
+- Improved hover-card placement so cards are less likely to cover the active mark
+- Updated `showHoverCard` handling in Storybook controls and restored it as a visible prop with a default value of `false`
+- Refreshed sample chart data to better reflect practical product-style scenarios
+- Rebuilt `Test2/storybook-static` so local static previews reflect current source changes
+
+## 2026-04-13
+
+### Initial workspace repo setup
+
+- Added the top-level git repo for the full workspace
+- Tracked both `Test1` and `Test2`
+- Preserved the split workflow:
+  - `Test1` for reference work
+  - `Test2` for active iteration
