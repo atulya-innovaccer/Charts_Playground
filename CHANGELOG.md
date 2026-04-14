@@ -4,6 +4,13 @@ All notable updates to this workspace should be recorded here.
 
 ## 2026-04-14
 
+### Test2 cleanup: remove old V1 chart layer
+
+- Removed the legacy `V1` chart source files from `Test2`
+- Removed the old `V1` chart stories from `Test2`
+- Kept `Test1` as the place to reference preserved `V1` chart behavior
+- Simplified `Test2` so it stays focused on the active `V3` implementation
+
 ### Test2 V3: Hover interactions and Storybook control cleanup
 
 - Added shared hover-card support for `V3` charts in `Test2`
