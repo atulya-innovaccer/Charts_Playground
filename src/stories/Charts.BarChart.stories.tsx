@@ -1,0 +1,222 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
+import { BarChart } from '../charts/BarChart';
+import {
+  chartActions,
+  selectOptions,
+  barCategories,
+  barSeries,
+  recaptureCategories,
+  distributionSegments,
+  riskDistributionSegments,
+  stackedBarSeries
+} from './storyData';
+import {
+  advancedDataArg,
+  baseDocNote,
+  booleanArg,
+  fillLegendMarkerLabels,
+  fillLegendMarkerOptions,
+  fillStyleLabels,
+  fillStyleOptions,
+  hiddenEventArgTypes,
+  hoverCardArg,
+  numberArg,
+  rangeArg,
+  selectArg,
+  surfaceArgTypes,
+  chartMetaParameters
+} from './chartStorybook';
+
+const meta = {
+  title: 'Charts/Bar Chart',
+  component: BarChart,
+  tags: ['autodocs'],
+  parameters: {
+    ...chartMetaParameters,
+    docs: {
+      description: {
+        component:
+          `${baseDocNote} For bars, the best everyday controls are ` +
+          '`mode`, `layout`, `fillStyle`, `legendMarker`, and the label toggles.'
+      }
+    }
+  },
+  argTypes: {
+    ...surfaceArgTypes,
+    ...hiddenEventArgTypes,
+    categories: advancedDataArg(
+      'Advanced category labels. Hidden from controls so people do not have to edit raw arrays.',
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    series: advancedDataArg(
+      'Advanced bar data. For normal exploration, use `fillStyle`, `layout`, and label toggles instead of editing raw series objects.',
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    distributionSegments: advancedDataArg(
+      'Advanced segmented-distribution data. Hidden because raw object editing is not a good layman control.',
+      { arg: 'mode', eq: 'distribution' }
+    ),
+    mode: selectArg(
+      ['vertical', 'distribution'],
+      'Use `vertical` for standard bar charts and `distribution` for segmented proportion bands.',
+      'Structure',
+      undefined,
+      'inline-radio',
+      {
+        vertical: 'Standard bars',
+        distribution: 'Distribution band'
+      }
+    ),
+    layout: selectArg(
+      ['grouped', 'stacked'],
+      'Finite bar layout choice for vertical bars.',
+      'Structure',
+      { arg: 'mode', neq: 'distribution' },
+      'inline-radio',
+      {
+        grouped: 'Grouped',
+        stacked: 'Stacked'
+      }
+    ),
+    fillStyle: selectArg(
+      fillStyleOptions,
+      'Best as a select because fill style is a closed visual set. This applies a chart-level bar fill style override.',
+      'Style',
+      { arg: 'mode', neq: 'distribution' },
+      'select',
+      fillStyleLabels
+    ),
+    legendMarker: selectArg(
+      fillLegendMarkerOptions,
+      'Best as a select because fill-based charts only need a few legend marker styles.',
+      'Style',
+      { arg: 'mode', neq: 'distribution' },
+      'select',
+      fillLegendMarkerLabels
+    ),
+    showHoverCard: hoverCardArg(),
+    showSegmentLabels: booleanArg(
+      'Boolean toggle for segment value labels on stacked bars.',
+      'Display',
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    showTotalLabels: booleanArg(
+      'Boolean toggle for top total labels on stacked bars.',
+      'Display',
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    showScale: booleanArg(
+      'Boolean toggle for the helper scale under distribution mode.',
+      'Display',
+      { arg: 'mode', eq: 'distribution' }
+    ),
+    barHeight: rangeArg(
+      'Numeric height for the distribution band.',
+      'Layout',
+      { min: 12, max: 40, step: 2 },
+      { arg: 'mode', eq: 'distribution' }
+    ),
+    groupGapRatio: rangeArg(
+      'Numeric ratio for space between category groups.',
+      'Layout',
+      { min: 0, max: 0.8, step: 0.05 },
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    barGap: rangeArg(
+      'Numeric gap in pixels between grouped bars.',
+      'Layout',
+      { min: 0, max: 12, step: 1 },
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    barCornerRadius: rangeArg(
+      'Numeric bar corner radius in pixels.',
+      'Layout',
+      { min: 0, max: 12, step: 1 },
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    plotWidth: numberArg(
+      'Numeric plot width for the chart area.',
+      'Layout',
+      { min: 240, max: 700, step: 10 },
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    plotHeight: numberArg(
+      'Numeric plot height for the chart area.',
+      'Layout',
+      { min: 120, max: 360, step: 10 },
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    yAxis: advancedDataArg(
+      'Advanced axis config. Hidden because object editing is better handled in code or story presets.',
+      { arg: 'mode', neq: 'distribution' }
+    ),
+    grid: advancedDataArg(
+      'Advanced grid config for code-level tweaking.',
+      { arg: 'mode', neq: 'distribution' }
+    )
+  }
+} satisfies Meta<typeof BarChart>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Grouped: Story = {
+  args: {
+    title: 'Revenue generated by type of payer',
+    categories: barCategories,
+    series: barSeries,
+    actions: chartActions.slice(0, 3),
+    showMenu: true,
+    selectOptions,
+    selectedValue: selectOptions[1].value,
+    showHoverCard: false,
+    yAxis: {
+      title: '% of total revenue generated',
+      ticks: ['100', '50', '0']
+    }
+  }
+};
+
+export const Stacked: Story = {
+  args: {
+    title: 'RAF recapture rate across age groups and genders',
+    categories: recaptureCategories,
+    series: stackedBarSeries,
+    layout: 'stacked',
+    showSegmentLabels: true,
+    showTotalLabels: true,
+    showHoverCard: false,
+    legendPosition: 'bottom',
+    actions: chartActions.slice(0, 3),
+    showMenu: true,
+    yAxis: {
+      title: 'Members',
+      ticks: ['80', '40', '0']
+    }
+  }
+};
+
+export const Distribution: Story = {
+  args: {
+    title: 'Opportunity per patient',
+    mode: 'distribution',
+    distributionSegments: distributionSegments,
+    showHoverCard: false,
+    actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
+    showMenu: true
+  }
+};
+
+export const DistributionWithScale: Story = {
+  args: {
+    title: 'ACG Risk Distribution',
+    mode: 'distribution',
+    distributionSegments: riskDistributionSegments,
+    showScale: true,
+    showHoverCard: false,
+    actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
+    showMenu: true
+  }
+};

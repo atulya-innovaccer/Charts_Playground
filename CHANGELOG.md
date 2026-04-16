@@ -2,6 +2,16 @@
 
 All notable updates to this workspace should be recorded here.
 
+## 2026-04-16
+
+### Final package promotion and cleanup
+
+- Removed the `Test1` and `Test2` wrapper folders
+- Promoted the active chart package to the repo root
+- Renamed the final chart implementation so it is now the default surface instead of a `V3`-named layer
+- Cleaned Storybook story names and helper references to match the final chart surface
+- Updated the repo documentation to describe the single-package structure
+
 ## 2026-04-14
 
 ### Test2 cleanup: remove old V1 chart layer

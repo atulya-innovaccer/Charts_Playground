@@ -1,32 +1,27 @@
 # Charts Playground
 
-Chart exploration workspace for building and iterating on a Figma-aligned charting library.
-
-This repo currently contains two parallel tracks:
-
-- `Test1`: reference implementation, including the preserved `V1` chart layer
-- `Test2`: active implementation track, now focused on `V3`
+Figma-aligned charting library workspace with Storybook and npm-ready packaging.
 
 ## Current Working Model
 
-- Treat `Test2` as the main development folder
-- Treat `Test1` as reference-only unless we explicitly decide to port something over
-- Keep `V1` intact in `Test1`
-- Use `V3` in `Test2` for active chart, interaction, and Storybook improvements
-- Do not reintroduce old `V1` chart code into `Test2`
+- The repo root is now the main package
+- The current chart implementation is the default implementation
+- Storybook and package builds run from the root
+- Older exploration wrappers have been removed so the codebase reads like a finished library
 
 ## Repo Structure
 
 ```text
 .
-├── Test1/
-│   └── reference explorations and preserved `V1` charts
-├── Test2/
-│   ├── src/
-│   │   ├── v3/
-│   │   └── stories/
-│   ├── .storybook/
-│   └── storybook-static/
+├── src/
+│   ├── charts/
+│   ├── components/
+│   ├── primitives/
+│   ├── stories/
+│   ├── theme/
+│   └── utils/
+├── .storybook/
+├── package.json
 └── CHANGELOG.md
 ```
 
@@ -35,7 +30,6 @@ This repo currently contains two parallel tracks:
 For quick static preview from an existing Storybook build:
 
 ```bash
-cd "Test2"
 python3 -m http.server 6020 -d storybook-static
 ```
 
@@ -51,25 +45,23 @@ Important:
 ## Build Storybook
 
 ```bash
-cd "Test2"
 npm install
 npm run build-storybook
 ```
 
 ## Main Areas Of Work
 
-Current focus in `Test2/V3` includes:
+Current focus includes:
 
 - Figma-aligned chart component development
 - prop UX improvements in Storybook
 - hover/tooltip interactions
 - more realistic product-style sample data
-- chart-by-chart iteration without disturbing the preserved `V1` work in `Test1`
+- chart-by-chart refinement inside the final package surface
 
 ## Workflow Notes
 
-- Make changes in `Test2`
-- Refer to `Test1` when old `V1` behavior or visual language needs to be checked
+- Make changes in the root package
 - Rebuild Storybook when using the static server
 - Record meaningful updates in `CHANGELOG.md`
 - Push to:

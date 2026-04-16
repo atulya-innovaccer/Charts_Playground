@@ -1,0 +1,489 @@
+import { chartTokens } from '../theme/tokens';
+import type {
+  BarSeries,
+  ChartAction,
+  DistributionSegment,
+  DonutSegment,
+  HalfDonutRange,
+  HistogramBin,
+  LegendItem,
+  LineSeriesConfig,
+  MapBubblePoint,
+  PointerScaleRange,
+  SelectOption,
+  TooltipRow
+} from '../types';
+
+export const chartActions: ChartAction[] = [
+  { id: 'restore', label: 'Restore' },
+  { id: 'line-view', label: 'Line chart view' },
+  { id: 'bar-view', label: 'Bar chart view' },
+  { id: 'data-view', label: 'Data view' },
+  { id: 'zoom-in', label: 'Zoom in' },
+  { id: 'zoom-out', label: 'Zoom out' },
+  { id: 'save-image', label: 'Save image' }
+];
+
+export const compactChartActions: ChartAction[] = [
+  { id: 'zoom-in', label: 'Zoom in' },
+  { id: 'zoom-out', label: 'Zoom out' },
+  { id: 'save-image', label: 'Save image' }
+];
+
+export const selectOptions: SelectOption[] = [
+  { label: 'Select', value: 'select' },
+  { label: 'Revenue', value: 'revenue' },
+  { label: 'Pipeline', value: 'pipeline' }
+];
+
+export const legendMarkers: LegendItem[] = [
+  {
+    label: 'Solid',
+    color: chartTokens.categorical.primary,
+    marker: 'solid'
+  },
+  {
+    label: 'Texture',
+    color: chartTokens.categorical.primary,
+    strokeColor: chartTokens.categorical.primary,
+    marker: 'solid-texture'
+  },
+  {
+    label: 'Dot line',
+    color: chartTokens.categorical.secondary,
+    strokeColor: chartTokens.categorical.secondary,
+    marker: 'dot-line'
+  },
+  {
+    label: 'Dashed line',
+    color: chartTokens.categorical.secondary,
+    strokeColor: chartTokens.categorical.secondary,
+    marker: 'line-dashed'
+  }
+];
+
+export const tooltipRows: TooltipRow[] = [
+  {
+    label: 'Placeholder',
+    value: 65,
+    color: chartTokens.categorical.primary,
+    marker: 'solid'
+  },
+  {
+    label: 'Placeholder',
+    value: 76,
+    color: chartTokens.categorical.secondary,
+    marker: 'dot-line'
+  }
+];
+
+export const barCategories = ['Commercial', 'Medicaid', 'Medicare'];
+
+export const barSeries: BarSeries[] = [
+  {
+    key: 'revenue-generated',
+    label: 'Revenue generated',
+    fill: chartTokens.categorical.primary,
+    stroke: chartTokens.categorical.primary,
+    data: [45, 40, 20]
+  },
+  {
+    key: 'revenue-targeted',
+    label: 'Revenue targeted',
+    fill: chartTokens.neutral.surfaceTint,
+    stroke: chartTokens.neutral.stoneLight,
+    data: [70, 65, 30]
+  }
+];
+
+export const recaptureCategories = ['18-30', '31-45', '46-60', '61-75', '75+'];
+
+export const stackedBarSeries: BarSeries[] = [
+  {
+    key: 'female',
+    label: 'Female',
+    fill: chartTokens.sequential.pink.lighter,
+    stroke: chartTokens.sequential.pink.default,
+    data: [12, 15, 28, 34, 33]
+  },
+  {
+    key: 'male',
+    label: 'Male',
+    fill: chartTokens.sequential.purple.light,
+    stroke: chartTokens.sequential.purple.default,
+    data: [10, 14, 26, 32, 31]
+  }
+];
+
+export const comboCategories = ['0-20', '21-40', '41-60', '61+'];
+
+export const comboBarSeries: BarSeries[] = [
+  {
+    key: 'female',
+    label: 'Female',
+    fill: chartTokens.sequential.pink.default,
+    stroke: chartTokens.sequential.pink.dark,
+    data: [22000, 51000, 86000, 12000]
+  },
+  {
+    key: 'male',
+    label: 'Male',
+    fill: chartTokens.categorical.secondary,
+    stroke: chartTokens.categorical.secondary,
+    data: [28000, 57000, 74000, 18000]
+  },
+  {
+    key: 'other',
+    label: 'Other',
+    fill: chartTokens.neutral.stoneLight,
+    stroke: chartTokens.neutral.nightLighter,
+    data: [18000, 43000, 80000, 10000]
+  }
+];
+
+export const comboLineSeries: LineSeriesConfig[] = [
+  {
+    key: 'revenue-percent',
+    label: 'Revenue %',
+    data: [26, 12.3, 34.7, 27],
+    stroke: chartTokens.text.default,
+    showDots: true,
+    showLabels: true,
+    axis: 'right'
+  }
+];
+
+export const donutSegments: DonutSegment[] = [
+  {
+    label: 'Current',
+    value: 70,
+    color: chartTokens.multiHue.donutBlue
+  },
+  {
+    label: 'Projected',
+    value: 23,
+    color: chartTokens.multiHue.donutBlue,
+    strokeColor: chartTokens.multiHue.donutBlue,
+    fillStyle: 'texture'
+  },
+  {
+    label: 'Remaining capacity',
+    value: 7,
+    color: chartTokens.neutral.surfaceTint,
+    showLabel: false,
+    showLegendItem: false
+  }
+];
+
+export const lineCategories = ["Q1 '23", "Q2 '23", "Q3 '23", "Q4 '23"];
+
+export const lineSeries: LineSeriesConfig[] = [
+  {
+    key: 'current',
+    label: 'Current',
+    data: [1094, 1086, 1074, 1068],
+    stroke: chartTokens.sequential.warning.default,
+    showDots: true,
+    showLabels: true
+  },
+  {
+    key: 'ye-projected',
+    label: 'YE Projected',
+    data: [1078, 1066, 1052, 1047],
+    stroke: chartTokens.sequential.warning.default,
+    lineStyle: 'dashed',
+    showDots: false
+  }
+];
+
+export const histogramBins: HistogramBin[] = [
+  { label: '0', value: 8, fill: chartTokens.sequential.default.lightest, stroke: chartTokens.sequential.default.dark, legendLabel: 'Observed distribution' },
+  { label: '1-5', value: 24, fill: chartTokens.sequential.default.lighter, stroke: chartTokens.sequential.default.dark, legendLabel: 'Observed distribution' },
+  { label: '6-10', value: 37, fill: chartTokens.sequential.default.light, stroke: chartTokens.sequential.default.dark, legendLabel: 'Observed distribution' },
+  { label: '11-20', value: 18, fill: chartTokens.sequential.default.default, stroke: chartTokens.sequential.default.dark, legendLabel: 'Observed distribution' },
+  { label: '21-30', value: 12, fill: chartTokens.sequential.default.dark, stroke: chartTokens.sequential.default.darker, legendLabel: 'Observed distribution' },
+  { label: '31+', value: 9, fill: chartTokens.sequential.default.darker, stroke: chartTokens.sequential.default.darker, legendLabel: 'Observed distribution' }
+];
+
+export const sparklineValues = [1028, 1036, 1041, 1033, 1047, 1052, 1048];
+export const sparklineLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+
+export const halfDonutRanges: HalfDonutRange[] = [
+  { from: 0, to: 30, color: chartTokens.sequential.red.dark, label: 'Needs attention' },
+  { from: 30, to: 50, color: chartTokens.sequential.warning.default, label: 'Watch list' },
+  { from: 50, to: 100, color: chartTokens.sequential.success.dark, label: 'On track' }
+];
+
+export const pointerRanges: PointerScaleRange[] = [
+  { from: 0, to: 10, color: chartTokens.neutral.stoneLight, label: 'Low' },
+  { from: 10, to: 20, color: chartTokens.sequential.warning.default, label: 'Medium' },
+  { from: 20, to: 100, color: chartTokens.sequential.red.dark, label: 'High' }
+];
+
+const baseMapBubblePoints: MapBubblePoint[] = [
+  {
+    key: 'seattle',
+    label: 'Seattle',
+    legendLabel: 'Hospital',
+    latitude: 47.6062,
+    longitude: -122.3321,
+    stateCode: 'WA',
+    value: 20,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'san-francisco',
+    label: 'San Francisco',
+    legendLabel: 'Hospital',
+    latitude: 37.7749,
+    longitude: -122.4194,
+    stateCode: 'CA',
+    value: 32,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'los-angeles',
+    label: 'Los Angeles',
+    legendLabel: 'Hospital',
+    latitude: 34.0522,
+    longitude: -118.2437,
+    stateCode: 'CA',
+    value: 44,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'phoenix',
+    label: 'Phoenix',
+    legendLabel: 'Affiliated ASC',
+    latitude: 33.4484,
+    longitude: -112.074,
+    stateCode: 'AZ',
+    value: 16,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke
+  },
+  {
+    key: 'denver',
+    label: 'Denver',
+    legendLabel: 'Affiliated ASC',
+    latitude: 39.7392,
+    longitude: -104.9903,
+    stateCode: 'CO',
+    value: 12,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke
+  },
+  {
+    key: 'dallas',
+    label: 'Dallas',
+    legendLabel: 'Hospital',
+    latitude: 32.7767,
+    longitude: -96.797,
+    stateCode: 'TX',
+    value: 26,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'houston',
+    label: 'Houston',
+    legendLabel: 'Non-affiliated ASC',
+    latitude: 29.7604,
+    longitude: -95.3698,
+    stateCode: 'TX',
+    value: 18,
+    fill: chartTokens.categorical.axisPalette[5].fill,
+    stroke: chartTokens.categorical.axisPalette[5].stroke
+  },
+  {
+    key: 'minneapolis',
+    label: 'Minneapolis',
+    legendLabel: 'Hospital',
+    latitude: 44.9778,
+    longitude: -93.265,
+    stateCode: 'MN',
+    value: 14,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'chicago',
+    label: 'Chicago',
+    legendLabel: 'Hospital',
+    latitude: 41.8781,
+    longitude: -87.6298,
+    stateCode: 'IL',
+    value: 28,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'atlanta',
+    label: 'Atlanta',
+    legendLabel: 'Affiliated ASC',
+    latitude: 33.749,
+    longitude: -84.388,
+    stateCode: 'GA',
+    value: 19,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke
+  },
+  {
+    key: 'new-york',
+    label: 'New York',
+    legendLabel: 'Hospital',
+    latitude: 40.7128,
+    longitude: -74.006,
+    stateCode: 'NY',
+    value: 38,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'boston',
+    label: 'Boston',
+    legendLabel: 'Affiliated ASC',
+    latitude: 42.3601,
+    longitude: -71.0589,
+    stateCode: 'MA',
+    value: 10,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke
+  },
+  {
+    key: 'miami',
+    label: 'Miami',
+    legendLabel: 'Hospital',
+    latitude: 25.7617,
+    longitude: -80.1918,
+    stateCode: 'FL',
+    value: 34,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'orlando',
+    label: 'Orlando',
+    legendLabel: 'Hospital',
+    latitude: 28.5383,
+    longitude: -81.3792,
+    stateCode: 'FL',
+    value: 22,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'jacksonville',
+    label: 'Jacksonville',
+    legendLabel: 'Affiliated ASC',
+    latitude: 30.3322,
+    longitude: -81.6557,
+    stateCode: 'FL',
+    value: 16,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke
+  },
+  {
+    key: 'tampa',
+    label: 'Tampa',
+    legendLabel: 'Hospital',
+    latitude: 27.9506,
+    longitude: -82.4572,
+    stateCode: 'FL',
+    value: 24,
+    fill: chartTokens.categorical.axisPalette[0].fill,
+    stroke: chartTokens.categorical.axisPalette[0].stroke
+  },
+  {
+    key: 'west-palm-beach',
+    label: 'West Palm Beach',
+    legendLabel: 'Non-affiliated ASC',
+    latitude: 26.7153,
+    longitude: -80.0534,
+    stateCode: 'FL',
+    value: 12,
+    fill: chartTokens.categorical.axisPalette[5].fill,
+    stroke: chartTokens.categorical.axisPalette[5].stroke
+  },
+  {
+    key: 'fort-myers',
+    label: 'Fort Myers',
+    legendLabel: 'Affiliated ASC',
+    latitude: 26.6406,
+    longitude: -81.8723,
+    stateCode: 'FL',
+    value: 10,
+    fill: chartTokens.categorical.axisPalette[2].fill,
+    stroke: chartTokens.categorical.axisPalette[2].stroke,
+    fillStyle: 'texture'
+  },
+  {
+    key: 'tallahassee',
+    label: 'Tallahassee',
+    legendLabel: 'Non-affiliated ASC',
+    latitude: 30.4383,
+    longitude: -84.2807,
+    stateCode: 'FL',
+    value: 8,
+    fill: chartTokens.categorical.axisPalette[5].fill,
+    stroke: chartTokens.categorical.axisPalette[5].stroke
+  }
+];
+
+const bubbleDetailByLegendLabel: Record<string, { costBase: number; avoidableBase: number }> = {
+  Hospital: { costBase: 28400000, avoidableBase: 31.2 },
+  'Affiliated ASC': { costBase: 12100000, avoidableBase: 18.4 },
+  'Non-affiliated ASC': { costBase: 9400000, avoidableBase: 25.1 }
+};
+
+export const mapBubblePoints: MapBubblePoint[] = baseMapBubblePoints.map(
+  (point, index) => {
+    const legendLabel = point.legendLabel ?? 'Hospital';
+    const detailBase =
+      bubbleDetailByLegendLabel[legendLabel] ?? bubbleDetailByLegendLabel.Hospital;
+    const surgeryCost = Math.round(detailBase.costBase + point.value * 312000 + index * 87000);
+    const avoidablePercent = (detailBase.avoidableBase + index * 0.7).toFixed(1);
+
+    return {
+      ...point,
+      details: [
+        { label: 'Network', value: legendLabel },
+        { label: 'State', value: point.stateCode ?? 'US' },
+        {
+          label: 'Surgery cost',
+          value: `$${surgeryCost.toLocaleString('en-US')}`
+        },
+        {
+          label: 'Potential avoidable %',
+          value: `${avoidablePercent}%`
+        }
+      ]
+    };
+  }
+);
+
+export const mapBubbleTableConfig = {
+  headers: ['Facility', 'State', 'Network', 'Potential avoidable %'],
+  rows: mapBubblePoints.map((point) => [
+    point.label,
+    point.stateCode ?? 'US',
+    point.legendLabel ?? 'Hospital',
+    point.details?.find((detail) => detail.label === 'Potential avoidable %')?.value ?? '0%'
+  ])
+};
+
+export const distributionSegments: DistributionSegment[] = [
+  { label: 'Less than $5,000', value: 55, fill: '#8798d7' },
+  { label: '$5,000 to $10,000', value: 35, fill: '#db7d46' },
+  { label: 'More than $10,000', value: 10, fill: '#c93030' }
+];
+
+export const riskDistributionSegments: DistributionSegment[] = [
+  { label: 'Low', value: 35, fill: chartTokens.sequential.neel.default },
+  { label: 'Medium', value: 25, fill: '#f1d4c6' },
+  { label: 'High', value: 20, fill: '#e29a80' },
+  { label: 'Very High', value: 10, fill: '#cd6c4c' }
+];

@@ -1,0 +1,180 @@
+import { useState } from 'react';
+
+import { chartTokens } from '../theme/tokens';
+import { ChartHoverCard } from '../components/ChartHoverCard';
+import { ChartShell } from '../components/ChartShell';
+import type { LegendPosition, PointerScaleRange, ChartHeaderProps } from '../types';
+import {
+  clamp,
+  formatTooltipValue,
+  getEstimatedHoverCardHeight,
+  getViewportHoverCardPosition,
+  getPointerScaleStops
+} from '../chartUtils';
+
+export interface PointerScaleProps extends ChartHeaderProps {
+  title?: string;
+  description?: string;
+  value: number;
+  min?: number;
+  max?: number;
+  target?: number;
+  width?: number | string;
+  showCardBackground?: boolean;
+  showHeader?: boolean;
+  showTitle?: boolean;
+  showLegend?: boolean;
+  legendPosition?: LegendPosition;
+  ranges?: PointerScaleRange[];
+  centerLabel?: string;
+  showHoverCard?: boolean;
+}
+
+const defaultScaleRanges: PointerScaleRange[] = [
+  { from: 0, to: 35, color: chartTokens.sequential.default.lightest, label: 'Low' },
+  { from: 35, to: 70, color: chartTokens.sequential.default.default, label: 'Medium' },
+  { from: 70, to: 100, color: chartTokens.sequential.default.darker, label: 'High' }
+];
+
+export function PointerScale({
+  title = 'Pointer Scale',
+  description,
+  value,
+  min = 0,
+  max = 100,
+  target,
+  width = 379,
+  showCardBackground = true,
+  showHeader = true,
+  showTitle = true,
+  showLegend = true,
+  legendPosition = 'bottom',
+  ranges = defaultScaleRanges,
+  centerLabel,
+  showHoverCard = false,
+  ...headerProps
+}: PointerScaleProps) {
+  const [hovered, setHovered] = useState(false);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const stops = getPointerScaleStops(ranges);
+  const clampedValue = clamp(value, min, max);
+  const clampedTarget =
+    typeof target === 'number' ? clamp(target, min, max) : undefined;
+  const activeRange =
+    ranges.find((range) => clampedValue >= range.from && clampedValue <= range.to) ??
+    ranges[ranges.length - 1];
+  const valueRatio = (clampedValue - min) / (max - min || 1);
+  const hoverRows = [
+    {
+      label: 'Current',
+      value: centerLabel ?? formatTooltipValue(clampedValue),
+      color: activeRange.color,
+      marker: 'solid' as const
+    },
+    {
+      label: 'Band',
+      value: activeRange.label ?? `${activeRange.from}-${activeRange.to}`,
+      color: activeRange.color,
+      marker: 'solid' as const
+    },
+    ...(typeof clampedTarget === 'number'
+      ? [
+          {
+            label: 'Target',
+            value: formatTooltipValue(clampedTarget)
+          }
+        ]
+      : []),
+    {
+      label: 'Scale',
+      value: `${min} - ${max}`
+    }
+  ];
+  const hoverCardPosition = mousePos
+    ? getViewportHoverCardPosition(mousePos.x, mousePos.y, 196, getEstimatedHoverCardHeight(hoverRows.length))
+    : null;
+
+  const legendItems = showLegend ? ranges.map(range => ({
+    label: range.label ?? `${range.from}-${range.to}`,
+    marker: 'solid' as const,
+    color: range.color,
+    active: true
+  })) : [];
+
+  return (
+    <ChartShell
+      width={width}
+      showCardBackground={showCardBackground}
+      showHeader={showHeader}
+      showTitle={showTitle}
+      title={title}
+      description={description}
+      legendItems={legendItems}
+      legendPosition={legendPosition}
+      {...headerProps}
+    >
+      <div
+        className="cl-chart-pointer"
+        style={{ position: 'relative' }}
+        onMouseMove={showHoverCard ? (event) => { setHovered(true); setMousePos({ x: event.clientX, y: event.clientY }); } : undefined}
+        onMouseLeave={showHoverCard ? () => { setHovered(false); setMousePos(null); } : undefined}
+      >
+        <div className="cl-chart-pointer__value">{centerLabel ?? `${Math.round(clampedValue)}`}</div>
+        <div className="cl-chart-pointer__track">
+          {stops.map((stop) => (
+            <span
+              key={`${stop.from}-${stop.to}`}
+              className="cl-chart-pointer__segment"
+              style={{
+                width: `${((stop.to - stop.from) / (max - min || 1)) * 100}%`,
+                background: stop.color
+              }}
+            />
+          ))}
+          <span
+            className="cl-chart-pointer__needle"
+            style={{
+              left: `${((clampedValue - min) / (max - min || 1)) * 100}%`
+            }}
+          />
+          {typeof clampedTarget === 'number' ? (
+            <span
+              className="cl-chart-pointer__target"
+              style={{
+                left: `${((clampedTarget - min) / (max - min || 1)) * 100}%`
+              }}
+            />
+          ) : null}
+        </div>
+        <div className="cl-chart-pointer__range-labels" style={{ display: 'flex', marginTop: '4px' }}>
+          {stops.map((stop) => (
+            <span
+              key={`label-${stop.from}-${stop.to}`}
+              style={{
+                width: `${((stop.to - stop.from) / (max - min || 1)) * 100}%`,
+                textAlign: 'center',
+                fontSize: '11px',
+                color: chartTokens.text.subtle,
+                fontFamily: chartTokens.fontFamily
+              }}
+            >
+              {stop.label}
+            </span>
+          ))}
+        </div>
+        <div className="cl-chart-pointer__labels">
+          <span>{min}</span>
+          <span>{max}</span>
+        </div>
+        {showHoverCard && hovered ? (
+          <ChartHoverCard
+            title={title}
+            rows={hoverRows}
+            left={hoverCardPosition?.left ?? 0}
+            top={hoverCardPosition?.top ?? 0}
+          />
+        ) : null}
+      </div>
+    </ChartShell>
+  );
+}
