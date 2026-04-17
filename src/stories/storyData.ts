@@ -121,15 +121,15 @@ export const comboBarSeries: BarSeries[] = [
   {
     key: 'female',
     label: 'Female',
-    fill: chartTokens.sequential.pink.default,
-    stroke: chartTokens.sequential.pink.dark,
+    fill: chartTokens.sequential.pink.dark,
+    stroke: chartTokens.sequential.pink.darker,
     data: [22000, 51000, 86000, 12000]
   },
   {
     key: 'male',
     label: 'Male',
-    fill: chartTokens.categorical.secondary,
-    stroke: chartTokens.categorical.secondary,
+    fill: chartTokens.categorical.primary,
+    stroke: chartTokens.sequential.neel.darker,
     data: [28000, 57000, 74000, 18000]
   },
   {
@@ -146,7 +146,7 @@ export const comboLineSeries: LineSeriesConfig[] = [
     key: 'revenue-percent',
     label: 'Revenue %',
     data: [26, 12.3, 34.7, 27],
-    stroke: chartTokens.text.default,
+    stroke: chartTokens.categorical.secondary,
     showDots: true,
     showLabels: true,
     axis: 'right'
@@ -215,7 +215,7 @@ export const halfDonutRanges: HalfDonutRange[] = [
 ];
 
 export const pointerRanges: PointerScaleRange[] = [
-  { from: 0, to: 10, color: chartTokens.neutral.stoneLight, label: 'Low' },
+  { from: 0, to: 10, color: chartTokens.sequential.success.dark, label: 'Low' },
   { from: 10, to: 20, color: chartTokens.sequential.warning.default, label: 'Medium' },
   { from: 20, to: 100, color: chartTokens.sequential.red.dark, label: 'High' }
 ];
@@ -482,8 +482,8 @@ export const distributionSegments: DistributionSegment[] = [
 ];
 
 export const riskDistributionSegments: DistributionSegment[] = [
-  { label: 'Low', value: 35, fill: chartTokens.sequential.neel.default },
-  { label: 'Medium', value: 25, fill: '#f1d4c6' },
+  { label: 'Low', value: 40, fill: chartTokens.sequential.neel.default },
+  { label: 'Medium', value: 30, fill: '#f1d4c6' },
   { label: 'High', value: 20, fill: '#e29a80' },
   { label: 'Very High', value: 10, fill: '#cd6c4c' }
 ];

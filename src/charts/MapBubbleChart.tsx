@@ -105,8 +105,8 @@ export function MapBubbleChart({
   description,
   points,
   width = 520,
-  plotWidth = 420,
-  plotHeight = 240,
+  plotWidth = 472,
+  plotHeight = 260,
   showCardBackground = true,
   showHeader = true,
   showTitle = true,
@@ -118,14 +118,14 @@ export function MapBubbleChart({
   stateCode,
   bubbleSort = 'descending',
   sizeScale = 'sqrt',
-  minBubbleRadius = 4,
-  maxBubbleRadius = 20,
+  minBubbleRadius = 3,
+  maxBubbleRadius = 14,
   fillStyle = 'inherit',
   legendMarker = 'auto',
   bubbleStyle = 'both',
   backgroundFill = chartTokens.neutral.surfaceTint,
-  landFill = chartTokens.neutral.stoneLightest,
-  borderColor = chartTokens.neutral.stoneLight,
+  landFill = chartTokens.neutral.stoneLighter,
+  borderColor = '#d1d5db',
   showCountyLines = true,
   showBubbleShadow = true,
   showHoverCard = false,
@@ -355,13 +355,12 @@ export function MapBubbleChart({
           </defs>
           <g transform={`translate(${plotWidth / 2 + panOffset.x}, ${plotHeight / 2 + panOffset.y}) scale(${zoomLevel}) translate(${-plotWidth / 2}, ${-plotHeight / 2})`}>
             <rect
-              x="1"
-              y="1"
-              width={plotWidth - 2}
-              height={plotHeight - 2}
+              x="0"
+              y="0"
+              width={plotWidth}
+              height={plotHeight}
               rx="4"
               fill={backgroundFill}
-              stroke={borderColor}
             />
             {regionScope === 'state' && selectedStateFeature ? (
               <>
@@ -372,15 +371,22 @@ export function MapBubbleChart({
                         d={pathGenerator(featureItem) ?? ''}
                         fill={landFill}
                         stroke={borderColor}
-                        strokeWidth="0.8"
+                        strokeWidth="0.6"
                       />
                     ))
-                  : null}
+                  : (
+                    <path
+                      d={pathGenerator(selectedStateFeature) ?? ''}
+                      fill={landFill}
+                      stroke={borderColor}
+                      strokeWidth="0.8"
+                    />
+                  )}
                 <path
                   d={pathGenerator(selectedStateFeature) ?? ''}
                   fill="none"
-                  stroke={chartTokens.text.default}
-                  strokeWidth="1.2"
+                  stroke={chartTokens.text.subtle}
+                  strokeWidth="1"
                 />
               </>
             ) : (
@@ -390,7 +396,7 @@ export function MapBubbleChart({
                   d={pathGenerator(featureItem) ?? ''}
                   fill={landFill}
                   stroke={borderColor}
-                  strokeWidth="1.2"
+                  strokeWidth="0.8"
                 />
               ))
             )}

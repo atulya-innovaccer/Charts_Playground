@@ -101,6 +101,7 @@ export const Default: Story = {
     legendPosition: 'bottom',
     showLegend: true,
     showHoverCard: false,
+    roundedCaps: true,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
   }
@@ -115,6 +116,7 @@ export const LabelsHidden: Story = {
     centerSubLabel: 'Target',
     showLegend: true,
     showHoverCard: false,
+    roundedCaps: true,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
   }
@@ -129,6 +131,7 @@ export const LegendTop: Story = {
     legendPosition: 'top',
     showLegend: true,
     showHoverCard: false,
+    roundedCaps: true,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
   }
@@ -143,6 +146,22 @@ export const LegendBottom: Story = {
     legendPosition: 'bottom',
     showLegend: true,
     showHoverCard: false,
+    roundedCaps: true,
+    actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
+    showMenu: true
+  }
+};
+
+export const FlatCaps: Story = {
+  args: {
+    title: 'Revenue Goal',
+    segments: donutSegments,
+    centerLabel: '100M',
+    centerSubLabel: 'Target',
+    legendPosition: 'bottom',
+    showLegend: true,
+    showHoverCard: false,
+    roundedCaps: false,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
   }

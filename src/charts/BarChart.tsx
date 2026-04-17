@@ -161,7 +161,9 @@ export function BarChart({
               height: barHeight,
               borderRadius: '4px',
               overflow: 'hidden',
-              width: plotWidth
+              width: plotWidth,
+              background: chartTokens.neutral.surfaceTint,
+              boxShadow: `inset 0 0 0 1px ${chartTokens.neutral.stoneLight}`
             }}
             onMouseLeave={
               showHoverCard ? () => { setHoveredDistributionIndex(null); setMousePos(null); } : undefined
@@ -189,6 +191,10 @@ export function BarChart({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    boxShadow:
+                      i < distributionSegments.length - 1
+                        ? 'inset -1px 0 0 rgba(255,255,255,0.35)'
+                        : undefined,
                     opacity:
                       hoveredDistributionIndex === null ||
                       hoveredDistributionIndex === i
@@ -215,22 +221,46 @@ export function BarChart({
           {showScale && (
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: '4px',
-                width: plotWidth
+                position: 'relative',
+                marginTop: '6px',
+                width: plotWidth,
+                height: 18
               }}
             >
               {[0, 0.2, 0.4, 0.6, 0.8, 1].map((tick) => (
                 <span
-                  key={tick}
+                  key={`tickmark-${tick}`}
                   style={{
-                    fontSize: '12px',
+                    position: 'absolute',
+                    left: `${tick * 100}%`,
+                    top: 0,
+                    width: 1,
+                    height: 4,
+                    background: chartTokens.neutral.stoneLight,
+                    transform: 'translateX(-0.5px)'
+                  }}
+                />
+              ))}
+              {[0, 0.2, 0.4, 0.6, 0.8, 1].map((tick) => (
+                <span
+                  key={`ticklabel-${tick}`}
+                  style={{
+                    position: 'absolute',
+                    left: `${tick * 100}%`,
+                    top: 6,
+                    fontSize: '11px',
                     color: chartTokens.text.subtle,
-                    fontFamily: chartTokens.fontFamily
+                    fontFamily: chartTokens.fontFamily,
+                    transform:
+                      tick === 0
+                        ? 'translateX(0)'
+                        : tick === 1
+                          ? 'translateX(-100%)'
+                          : 'translateX(-50%)',
+                    whiteSpace: 'nowrap'
                   }}
                 >
-                  {tick}
+                  {`${Math.round(tick * 100)}%`}
                 </span>
               ))}
             </div>

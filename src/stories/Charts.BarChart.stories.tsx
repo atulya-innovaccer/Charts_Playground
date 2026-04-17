@@ -203,6 +203,7 @@ export const Distribution: Story = {
     title: 'Opportunity per patient',
     mode: 'distribution',
     distributionSegments: distributionSegments,
+    plotWidth: 454,
     showHoverCard: false,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
@@ -215,6 +216,7 @@ export const DistributionWithScale: Story = {
     mode: 'distribution',
     distributionSegments: riskDistributionSegments,
     showScale: true,
+    plotWidth: 454,
     showHoverCard: false,
     actions: [{ id: 'save-image', label: 'Save', onClick: () => {} }],
     showMenu: true
